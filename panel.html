@@ -5,54 +5,28 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>DPÜ Spor Kulübü — Yönetim Paneli</title>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f5;color:#1a1a2e;min-height:100vh}
 
-/* LOGIN */
-#loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0d1b3e 0%,#1a3a6e 100%);position:fixed;inset:0;z-index:100;}
-.login-box{background:#fff;border-radius:24px;padding:2.5rem;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,.4);}
-.login-logo{width:80px;height:80px;background:#c9a227;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:900;color:#fff;margin:0 auto 1.5rem;box-shadow:0 4px 20px rgba(201,162,39,.4);}
-.login-box h2{text-align:center;font-size:1.4rem;font-weight:800;color:#0d1b3e;margin-bottom:.3rem;}
-.login-box p{text-align:center;color:#888;font-size:.82rem;margin-bottom:2rem;}
-.lfield{margin-bottom:1.1rem;}
-.lfield label{display:block;font-size:.72rem;font-weight:700;color:#555;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.5px;}
-.lfield input{width:100%;padding:.85rem 1rem;border:2px solid #e8e8e8;border-radius:12px;font-size:.95rem;font-family:inherit;transition:.2s;background:#f9f9f9;}
-.lfield input:focus{outline:none;border-color:#0d1b3e;background:#fff;}
-.btn-login{width:100%;padding:1rem;background:linear-gradient(135deg,#0d1b3e,#1a3a6e);color:#fff;border:none;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;transition:.2s;letter-spacing:.5px;}
-.btn-login:hover{opacity:.9;transform:translateY(-1px);}
-.btn-setup{width:100%;padding:.7rem;background:transparent;border:2px solid #e8e8e8;border-radius:12px;font-size:.82rem;font-weight:600;color:#888;cursor:pointer;transition:.2s;margin-top:.8rem;}
-.btn-setup:hover{border-color:#c9a227;color:#c9a227;}
-.login-err{font-size:.82rem;text-align:center;margin-top:.8rem;min-height:1.2em;}
-
-/* HEADER */
-.header{background:linear-gradient(135deg,#0d1b3e,#1a3a6e);color:white;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;box-shadow:0 2px 12px rgba(0,0,0,.35);}
-.header-left{display:flex;align-items:center;gap:1rem;}
+.header{background:linear-gradient(135deg,#0d1b3e,#1a3a6e);color:white;padding:1rem 2rem;display:flex;align-items:center;gap:1rem;box-shadow:0 2px 12px rgba(0,0,0,.35);}
 .header h1{font-size:1.2rem;font-weight:800;letter-spacing:.5px;}
 .header .sub{font-size:.78rem;opacity:.7;margin-top:.1rem;}
 .logo{width:44px;height:44px;background:#c9a227;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:900;flex-shrink:0;}
-.header-actions{display:flex;gap:.5rem;align-items:center;}
-.user-badge{font-size:.78rem;background:rgba(255,255,255,.15);padding:.3rem .9rem;border-radius:20px;font-weight:600;}
-.btn-hdr{padding:.4rem .9rem;border:1px solid rgba(255,255,255,.3);border-radius:8px;background:transparent;color:#fff;font-size:.8rem;cursor:pointer;transition:.2s;}
-.btn-hdr:hover{background:rgba(255,255,255,.15);}
 
-/* TABS */
 .tabs{background:white;border-bottom:2px solid #e0e0e0;display:flex;padding:0 2rem;overflow-x:auto;}
 .tab{padding:1rem 1.2rem;border:none;background:transparent;font-size:.88rem;font-weight:600;color:#888;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:.2s;}
 .tab.active{color:#0d1b3e;border-bottom-color:#c9a227;}
 .tab-content{display:none;padding:2rem;max-width:1200px;margin:0 auto;}
 .tab-content.active{display:block;}
 
-/* STATS */
 .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2rem;}
 .stat-card{background:#fff;border-radius:16px;padding:1.3rem;box-shadow:0 2px 12px rgba(0,0,0,.06);border-left:4px solid #c9a227;}
 .stat-card .slbl{font-size:.72rem;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:.3rem;}
 .stat-card .sval{font-size:1.6rem;font-weight:800;color:#0d1b3e;}
 .stat-card .ssub{font-size:.75rem;color:#aaa;margin-top:.2rem;}
 
-/* TABLE */
 table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06);}
 thead{background:linear-gradient(135deg,#0d1b3e,#1a3a6e);}
 thead th{padding:1rem;color:#fff;font-size:.78rem;font-weight:700;letter-spacing:1px;text-align:left;text-transform:uppercase;}
@@ -60,52 +34,21 @@ tbody tr{border-bottom:1px solid #f0f0f0;transition:.15s;}
 tbody tr:hover{background:#f8f9fa;}
 tbody td{padding:.9rem 1rem;font-size:.88rem;}
 
-/* BRANCH */
 .branch-section{background:#fff;border-radius:16px;padding:1.5rem;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:1.5rem;}
 .branch-header{display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem;padding-bottom:.8rem;border-bottom:2px solid #f0f0f0;}
-
-/* ATTENDANCE */
 .attendance-grid{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.8rem;}
 .day-btn{width:36px;height:36px;border-radius:8px;border:2px solid #e0e0e0;background:#fff;font-size:.8rem;font-weight:600;cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center;}
 .day-btn.checked{background:#22c55e;border-color:#22c55e;color:#fff;}
 .day-btn:hover:not(.checked){border-color:#0d1b3e;}
 
-/* BUTTONS */
 .btn{padding:.5rem 1.1rem;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;border:none;transition:.2s;}
-.btn-primary{background:#0d1b3e;color:#fff;}
 .btn-danger{background:#ef4444;color:#fff;}
 .btn-gold{background:#c9a227;color:#fff;}
 .btn-outline{background:transparent;border:2px solid #0d1b3e;color:#0d1b3e;}
 
-/* USER CARDS */
-.user-list{display:grid;gap:1rem;}
-.user-card{background:#fff;border-radius:12px;padding:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,.06);display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
-.user-avatar{width:44px;height:44px;border-radius:50%;background:#0d1b3e;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;flex-shrink:0;}
-.user-info{flex:1;}
-.user-name{font-weight:700;color:#0d1b3e;}
-.user-uname{font-size:.78rem;color:#888;}
-.role-badge{font-size:.72rem;padding:.2rem .7rem;border-radius:20px;font-weight:700;}
-.role-admin{background:#fef3c7;color:#92400e;}
-.role-coach{background:#dbeafe;color:#1e40af;}
-
-/* MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:none;align-items:center;justify-content:center;}
-.modal-overlay.open{display:flex;}
-.modal-box{background:#fff;border-radius:20px;padding:2rem;width:100%;max-width:480px;box-shadow:0 20px 60px rgba(0,0,0,.3);margin:1rem;}
-.modal-box h3{font-size:1.1rem;font-weight:800;margin-bottom:1.2rem;color:#0d1b3e;}
-.mfield{margin-bottom:1rem;}
-.mfield label{display:block;font-size:.75rem;font-weight:600;color:#555;margin-bottom:.3rem;text-transform:uppercase;}
-.mfield input,.mfield select{width:100%;padding:.7rem;border:2px solid #e0e0e0;border-radius:8px;font-size:.9rem;font-family:inherit;}
-.mfield input:focus,.mfield select:focus{outline:none;border-color:#0d1b3e;}
-.branch-cbs{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem;}
-.branch-cb{display:flex;align-items:center;gap:.3rem;background:#f4f6f9;padding:.3rem .7rem;border-radius:8px;font-size:.82rem;cursor:pointer;}
-.modal-actions{display:flex;gap:.8rem;justify-content:flex-end;margin-top:1.5rem;}
-
-/* TOAST */
 #toast{position:fixed;bottom:2rem;right:2rem;background:#1a1a2e;color:#fff;padding:.8rem 1.5rem;border-radius:12px;font-size:.88rem;font-weight:600;opacity:0;transform:translateY(20px);transition:.3s;z-index:9999;pointer-events:none;}
 #toast.show{opacity:1;transform:translateY(0);}
 
-/* LOADING */
 #loadingOverlay{position:fixed;inset:0;background:rgba(13,27,62,.85);z-index:200;display:none;align-items:center;justify-content:center;flex-direction:column;gap:1rem;}
 #loadingOverlay.show{display:flex;}
 .spinner{width:50px;height:50px;border:4px solid rgba(255,255,255,.2);border-top-color:#c9a227;border-radius:50%;animation:spin 1s linear infinite;}
@@ -122,139 +65,69 @@ tbody td{padding:.9rem 1rem;font-size:.88rem;}
 </head>
 <body>
 
-<!-- LOADING -->
 <div id="loadingOverlay">
   <div class="spinner"></div>
   <div class="loading-txt" id="loadingTxt">Yükleniyor...</div>
 </div>
 
-<!-- LOGIN -->
-<div id="loginScreen">
-  <div class="login-box">
-    <div class="login-logo">DPÜ</div>
-    <h2>Yönetim Paneli</h2>
-    <p>DPÜ Spor Kulübü — Antrenör Girişi</p>
-    <div class="lfield">
-      <label>Kullanıcı Adı</label>
-      <input type="text" id="loginUser" placeholder="KullaniciAdi" autocomplete="username">
-    </div>
-    <div class="lfield">
-      <label>Şifre</label>
-      <input type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
-    </div>
-    <button class="btn-login" onclick="doLogin()">Giriş Yap</button>
-    <div class="login-err" id="loginErr"></div>
-    <button class="btn-setup" id="setupBtn" onclick="doSetup()">⚙️ İlk Kurulum (Yalnızca ilk açılışta)</button>
+<div class="header">
+  <div class="logo">DPÜ</div>
+  <div>
+    <h1>DPÜ Spor Kulübü</h1>
+    <div class="sub">Yönetim Paneli</div>
   </div>
 </div>
 
-<!-- MAIN PANEL -->
-<div id="mainPanel" style="display:none;">
-  <div class="header">
-    <div class="header-left">
-      <div class="logo">DPÜ</div>
-      <div>
-        <h1>DPÜ Spor Kulübü</h1>
-        <div class="sub">Yönetim Paneli</div>
-      </div>
-    </div>
-    <div class="header-actions">
-      <span class="user-badge" id="userBadge">👤</span>
-      <button class="btn-hdr" onclick="doLogout()">🚪 Çıkış</button>
-    </div>
-  </div>
-
-  <div class="tabs">
-    <button class="tab active" onclick="showTab(this,'dashboard')">📊 Genel Bakış</button>
-    <button class="tab" onclick="showTab(this,'yoklama')">📋 Yoklama</button>
-    <button class="tab" onclick="showTab(this,'rapor')">💰 Ödeme Raporu</button>
-    <button class="tab admin-tab" onclick="showTab(this,'antrenorler')" style="display:none">👥 Antrenör Özeti</button>
-    <button class="tab admin-tab" onclick="showTab(this,'kullanicilar')" style="display:none">🔐 Kullanıcılar</button>
-  </div>
-
-  <!-- Dashboard -->
-  <div class="tab-content active" id="tab-dashboard">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
-      <div>
-        <h2 style="font-size:1.3rem;font-weight:800;color:#0d1b3e;">Genel Bakış</h2>
-        <div style="font-size:.82rem;color:#888;" id="dashPeriod"></div>
-      </div>
-      <div style="display:flex;gap:.5rem;">
-        <select id="selYear" onchange="loadData()" style="padding:.4rem .8rem;border:2px solid #e0e0e0;border-radius:8px;font-family:inherit;font-weight:600;"></select>
-        <select id="selMonth" onchange="loadData()" style="padding:.4rem .8rem;border:2px solid #e0e0e0;border-radius:8px;font-family:inherit;font-weight:600;"></select>
-      </div>
-    </div>
-    <div class="stat-grid" id="dashStats"></div>
-    <div id="dashCards"></div>
-  </div>
-
-  <!-- Yoklama -->
-  <div class="tab-content" id="tab-yoklama">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
-      <h2 style="font-size:1.3rem;font-weight:800;color:#0d1b3e;">Aylık Yoklama</h2>
-      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
-        <button class="btn btn-outline" onclick="markAll(true)">✅ Tümünü İşaretle</button>
-        <button class="btn btn-outline" onclick="markAll(false)">☐ Temizle</button>
-        <button class="btn btn-danger" onclick="resetMonth()">🗑 Ayı Sıfırla</button>
-      </div>
-    </div>
-    <div id="yoklamaContent"></div>
-  </div>
-
-  <!-- Rapor -->
-  <div class="tab-content" id="tab-rapor">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
-      <h2 style="font-size:1.3rem;font-weight:800;color:#0d1b3e;">Ödeme Raporu</h2>
-      <button class="btn btn-gold" onclick="exportCSV()">📥 CSV İndir</button>
-    </div>
-    <div id="raporContent"></div>
-  </div>
-
-  <!-- Antrenör Özeti -->
-  <div class="tab-content" id="tab-antrenorler">
-    <h2 style="font-size:1.3rem;font-weight:800;color:#0d1b3e;margin-bottom:1.5rem;">Antrenör Özeti</h2>
-    <div id="antrenorContent"></div>
-  </div>
-
-  <!-- Kullanıcılar -->
-  <div class="tab-content" id="tab-kullanicilar">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
-      <h2 style="font-size:1.3rem;font-weight:800;color:#0d1b3e;">Kullanıcı Yönetimi</h2>
-    </div>
-    <div id="kullanicilarContent"></div>
-  </div>
+<div class="tabs">
+  <button class="tab active" onclick="showTab(this,'dashboard')">📊 Genel Bakış</button>
+  <button class="tab" onclick="showTab(this,'yoklama')">📋 Yoklama</button>
+  <button class="tab" onclick="showTab(this,'rapor')">💰 Ödeme Raporu</button>
+  <button class="tab" onclick="showTab(this,'antrenorler')">👥 Antrenör Özeti</button>
 </div>
 
-<!-- User Modal -->
-<div class="modal-overlay" id="userModal">
-  <div class="modal-box">
-    <h3>Kullanıcı Düzenle</h3>
-    <div class="mfield">
-      <label>Ad Soyad</label>
-      <input type="text" id="mName">
+<div class="tab-content active" id="tab-dashboard">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+    <div>
+      <h2 style="font-size:1.3rem;font-weight:800;color:#0d1b3e;">Genel Bakış</h2>
+      <div style="font-size:.82rem;color:#888;" id="dashPeriod"></div>
     </div>
-    <div class="mfield">
-      <label>Rol</label>
-      <select id="mRole" onchange="toggleBranchField()">
-        <option value="admin">Admin</option>
-        <option value="coach">Antrenör</option>
-      </select>
-    </div>
-    <div class="mfield" id="mBranchField">
-      <label>Branşlar</label>
-      <div class="branch-cbs" id="mBranchCbs"></div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-outline" onclick="closeModal()">İptal</button>
-      <button class="btn btn-primary" onclick="saveUser()">Kaydet</button>
+    <div style="display:flex;gap:.5rem;">
+      <select id="selYear" onchange="loadData()" style="padding:.4rem .8rem;border:2px solid #e0e0e0;border-radius:8px;font-family:inherit;font-weight:600;"></select>
+      <select id="selMonth" onchange="loadData()" style="padding:.4rem .8rem;border:2px solid #e0e0e0;border-radius:8px;font-family:inherit;font-weight:600;"></select>
     </div>
   </div>
+  <div class="stat-grid" id="dashStats"></div>
+  <div id="dashCards"></div>
+</div>
+
+<div class="tab-content" id="tab-yoklama">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+    <h2 style="font-size:1.3rem;font-weight:800;color:#0d1b3e;">Aylık Yoklama</h2>
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+      <button class="btn btn-outline" onclick="markAll(true)">✅ Tümünü İşaretle</button>
+      <button class="btn btn-outline" onclick="markAll(false)">☐ Temizle</button>
+      <button class="btn btn-danger" onclick="resetMonth()">🗑 Ayı Sıfırla</button>
+    </div>
+  </div>
+  <div id="yoklamaContent"></div>
+</div>
+
+<div class="tab-content" id="tab-rapor">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+    <h2 style="font-size:1.3rem;font-weight:800;color:#0d1b3e;">Ödeme Raporu</h2>
+    <button class="btn btn-gold" onclick="exportCSV()">📥 CSV İndir</button>
+  </div>
+  <div id="raporContent"></div>
+</div>
+
+<div class="tab-content" id="tab-antrenorler">
+  <h2 style="font-size:1.3rem;font-weight:800;color:#0d1b3e;margin-bottom:1.5rem;">Antrenör Özeti</h2>
+  <div id="antrenorContent"></div>
 </div>
 
 <div id="toast"></div>
 
 <script>
-// ── FIREBASE ──
 const firebaseConfig = {
   apiKey: "AIzaSyBmkk_9ySHuJNGfiWrGm777DbDVOHfi2js",
   authDomain: "dpusk-panel.firebaseapp.com",
@@ -264,21 +137,8 @@ const firebaseConfig = {
   appId: "1:158616932133:web:00dd81c50a73ebecd2d4cc"
 };
 firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
 const db = firebase.firestore();
 
-// ── KULLANICI TANIMLAMALARI ──
-const USERS = [
-  { username:'OsmanTolgaSinoforoglu', password:'24031874',           name:'Osman Tolga Şinoforoğlu', role:'admin', branches:['*'] },
-  { username:'GizemYerlikaya',        password:'GizemYerlikaya2026', name:'Gizem Yerlikaya',         role:'coach', branches:['yuzme','voleybol'] },
-  { username:'Hamdi',                 password:'Hamdi2026',          name:'Hamdi',                   role:'coach', branches:['basketbol'] },
-  { username:'Metin',                 password:'Metin2026',          name:'Metin',                   role:'coach', branches:['tenis'] },
-  { username:'Omer',                  password:'Omer2026',           name:'Ömer',                    role:'coach', branches:['jimnastik'] },
-  { username:'SahikaYurttas',         password:'SahikaYurttas2026',  name:'Şahika Yurttaş',          role:'coach', branches:['masatenisi','zumba','pilates'] },
-];
-function toEmail(u){ return u.toLowerCase()+'@dpusk.com'; }
-
-// ── BRANŞLAR ──
 const DEFAULT_BRANCHES = [
   { id:'yuzme',      name:'Yüzme',       emoji:'🏊', color:'#0077b6',
     coaches:[{id:'y1',name:'Gizem Yerlikaya',weight:2}], dailyRate:750 },
@@ -299,180 +159,84 @@ const DEFAULT_BRANCHES = [
 ];
 const MONTHS = ['','Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
 
-// ── STATE ──
-let currentUser=null, userProfile=null, panelData=null;
-let currentYear=new Date().getFullYear(), currentMonth=new Date().getMonth()+1;
-let editingUid=null, editUserData=null;
+let panelData = null;
+let currentYear = new Date().getFullYear();
+let currentMonth = new Date().getMonth() + 1;
 
-// ── YARDIMCILAR ──
 function showLoading(txt='Yükleniyor...'){
-  document.getElementById('loadingTxt').textContent=txt;
+  document.getElementById('loadingTxt').textContent = txt;
   document.getElementById('loadingOverlay').classList.add('show');
 }
 function hideLoading(){ document.getElementById('loadingOverlay').classList.remove('show'); }
-function toast(msg,dur=2500){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),dur);
-}
-function setErr(msg,color='#e53e3e'){
-  const el=document.getElementById('loginErr');
-  el.style.color=color;el.textContent=msg;
+function toast(msg, dur=2500){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), dur);
 }
 
-// ── İLK KURULUM ──
-async function doSetup(){
-  if(!confirm('Tüm kullanıcı hesapları oluşturulacak. Devam edilsin mi?'))return;
-  showLoading('Hesaplar oluşturuluyor...');
-  let done=0;
-  for(const u of USERS){
-    try{
-      document.getElementById('loadingTxt').textContent='Oluşturuluyor: '+u.name+'...';
-      const res=await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${firebaseConfig.apiKey}`,{
-        method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({email:toEmail(u.username),password:u.password,returnSecureToken:true})
-      });
-      const data=await res.json();
-      if(data.error){
-        if(data.error.message==='EMAIL_EXISTS')continue;
-        continue;
-      }
-      await db.collection('users').doc(data.localId).set({
-        name:u.name,username:u.username,email:toEmail(u.username),
-        role:u.role,branches:u.branches,createdAt:new Date().toISOString()
-      });
-      done++;
-    }catch(e){console.warn(u.name,e);}
-  }
-  hideLoading();
-  document.getElementById('setupBtn').style.display='none';
-  setErr('✅ Kurulum tamamlandı! '+done+' hesap oluşturuldu. Giriş yapabilirsiniz.','#22c55e');
-}
-
-// ── GİRİŞ ──
-async function doLogin(){
-  const username=document.getElementById('loginUser').value.trim();
-  const pass=document.getElementById('loginPass').value;
-  setErr('');
-  if(!username||!pass){setErr('Kullanıcı adı ve şifre gerekli.');return;}
-  showLoading('Giriş yapılıyor...');
-  try{
-    await auth.signInWithEmailAndPassword(toEmail(username),pass);
-  }catch(e){
-    hideLoading();
-    setErr('Kullanıcı adı veya şifre hatalı.');
-  }
-}
-
-async function doLogout(){
-  await auth.signOut();
-  document.getElementById('mainPanel').style.display='none';
-  document.getElementById('loginScreen').style.display='flex';
-  document.getElementById('loginUser').value='';
-  document.getElementById('loginPass').value='';
-  setErr('');
-}
-
-// ── AUTH DURUMU ──
-auth.onAuthStateChanged(async(user)=>{
-  if(!user){
-    hideLoading();
-    document.getElementById('mainPanel').style.display='none';
-    document.getElementById('loginScreen').style.display='flex';
-    return;
-  }
-  currentUser=user;
-  showLoading('Profil yükleniyor...');
-  try{
-    const snap=await db.collection('users').doc(user.uid).get();
-    if(!snap.exists){hideLoading();await auth.signOut();return;}
-    userProfile=snap.data();
-    document.getElementById('loginScreen').style.display='none';
-    document.getElementById('mainPanel').style.display='block';
-    initPanel();
-  }catch(e){hideLoading();console.error(e);}
+window.addEventListener('DOMContentLoaded', () => {
+  const ySel = document.getElementById('selYear');
+  const mSel = document.getElementById('selMonth');
+  for(let y=2024;y<=2030;y++) ySel.innerHTML += `<option value="${y}" ${y===currentYear?'selected':''}>${y}</option>`;
+  for(let m=1;m<=12;m++) mSel.innerHTML += `<option value="${m}" ${m===currentMonth?'selected':''}>${MONTHS[m]}</option>`;
+  loadData();
 });
 
-// ── PANEL BAŞLATMA ──
-function initPanel(){
-  document.getElementById('userBadge').textContent='👤 '+userProfile.name;
-  if(userProfile.role==='admin'){
-    document.querySelectorAll('.admin-tab').forEach(el=>el.style.display='');
-  }
-  const ySel=document.getElementById('selYear');
-  const mSel=document.getElementById('selMonth');
-  ySel.innerHTML='';mSel.innerHTML='';
-  for(let y=2024;y<=2030;y++) ySel.innerHTML+=`<option value="${y}" ${y===currentYear?'selected':''}>${y}</option>`;
-  for(let m=1;m<=12;m++) mSel.innerHTML+=`<option value="${m}" ${m===currentMonth?'selected':''}>${MONTHS[m]}</option>`;
-  loadData();
-}
-
-// ── VERİ YÜKLEME ──
 async function loadData(){
-  currentYear=parseInt(document.getElementById('selYear').value)||currentYear;
-  currentMonth=parseInt(document.getElementById('selMonth').value)||currentMonth;
+  currentYear = parseInt(document.getElementById('selYear').value) || currentYear;
+  currentMonth = parseInt(document.getElementById('selMonth').value) || currentMonth;
   showLoading('Veriler yükleniyor...');
-  const docId=`${currentYear}_${currentMonth}`;
+  const docId = `${currentYear}_${currentMonth}`;
   try{
-    const snap=await db.collection('months').doc(docId).get();
-    if(snap.exists){ panelData=snap.data(); }
+    const snap = await db.collection('months').doc(docId).get();
+    if(snap.exists){ panelData = snap.data(); }
     else{
-      panelData={year:currentYear,month:currentMonth,branches:{}};
+      panelData = {year:currentYear, month:currentMonth, branches:{}};
       DEFAULT_BRANCHES.forEach(b=>{
-        const att={};
-        b.coaches.forEach(c=>{att[c.id]=[];});
-        panelData.branches[b.id]={...b,attendance:att};
+        const att = {};
+        b.coaches.forEach(c=>{ att[c.id] = []; });
+        panelData.branches[b.id] = {...b, attendance:att};
       });
     }
     renderAll();
-  }finally{hideLoading();}
+  }finally{ hideLoading(); }
 }
 
 async function saveData(){
-  const docId=`${currentYear}_${currentMonth}`;
+  const docId = `${currentYear}_${currentMonth}`;
   await db.collection('months').doc(docId).set(panelData);
   toast('✅ Kaydedildi');
 }
 
-// ── KULLANICI BRANŞLARI ──
-function getUserBranches(){
-  if(userProfile.role==='admin'||userProfile.branches.includes('*'))
-    return Object.keys(panelData.branches||{});
-  return (userProfile.branches||[]).filter(b=>panelData.branches[b]);
-}
-
-// ── HESAPLAMA ──
 function calcBranch(bid){
-  const b=panelData.branches[bid];
-  if(!b)return{income:0,coachPay:0,kulupPay:0,totalDays:0};
-  const totalW=b.coaches.reduce((s,c)=>s+(c.weight||1),0)||1;
-  let totalDays=0,coachPay=0;
+  const b = panelData.branches[bid];
+  if(!b) return {income:0, coachPay:0, kulupPay:0, totalDays:0};
+  const totalW = b.coaches.reduce((s,c)=>s+(c.weight||1), 0) || 1;
+  let totalDays=0, coachPay=0;
   b.coaches.forEach(c=>{
-    const days=(b.attendance[c.id]||[]).length;
-    totalDays+=days;
-    coachPay+=days*(b.dailyRate||750)*((c.weight||1)/totalW);
+    const days = (b.attendance[c.id]||[]).length;
+    totalDays += days;
+    coachPay += days * (b.dailyRate||750) * ((c.weight||1)/totalW);
   });
-  const income=totalDays*(b.dailyRate||750);
-  return{income,coachPay,kulupPay:income-coachPay,totalDays};
+  const income = totalDays * (b.dailyRate||750);
+  return {income, coachPay, kulupPay:income-coachPay, totalDays};
 }
 
-// ── RENDER HEPSİ ──
 function renderAll(){
   renderDashboard();
   renderYoklama();
   renderRapor();
-  if(userProfile.role==='admin')renderAntrenorler();
+  renderAntrenorler();
 }
 
-// ── DASHBOARD ──
 function renderDashboard(){
-  document.getElementById('dashPeriod').textContent=`${MONTHS[currentMonth]} ${currentYear}`;
-  const branches=getUserBranches();
-  let totalIncome=0,totalCoachPay=0,totalKulupPay=0,activeBranches=0;
+  document.getElementById('dashPeriod').textContent = `${MONTHS[currentMonth]} ${currentYear}`;
+  const branches = Object.keys(panelData.branches||{});
+  let totalIncome=0, totalCoachPay=0, totalKulupPay=0, activeBranches=0;
   branches.forEach(bid=>{
-    const r=calcBranch(bid);
-    totalIncome+=r.income;totalCoachPay+=r.coachPay;totalKulupPay+=r.kulupPay;
-    if(r.totalDays>0)activeBranches++;
+    const r = calcBranch(bid);
+    totalIncome += r.income; totalCoachPay += r.coachPay; totalKulupPay += r.kulupPay;
+    if(r.totalDays > 0) activeBranches++;
   });
   document.getElementById('dashStats').innerHTML=`
     <div class="stat-card"><div class="slbl">Toplam Gelir</div><div class="sval">₺${totalIncome.toLocaleString('tr')}</div><div class="ssub">Tüm branşlar</div></div>
@@ -480,10 +244,10 @@ function renderDashboard(){
     <div class="stat-card" style="border-color:#06b6d4"><div class="slbl">Kulüp Payı</div><div class="sval">₺${Math.round(totalKulupPay).toLocaleString('tr')}</div><div class="ssub">Kulüp geliri</div></div>
     <div class="stat-card" style="border-color:#8b5cf6"><div class="slbl">Aktif Branş</div><div class="sval">${activeBranches}/${branches.length}</div><div class="ssub">Bu ay</div></div>
   `;
-  let cards='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem">';
+  let cards = '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem">';
   branches.forEach(bid=>{
-    const b=panelData.branches[bid];const r=calcBranch(bid);
-    cards+=`<div style="background:#fff;border-radius:14px;padding:1.2rem;box-shadow:0 2px 10px rgba(0,0,0,.06);border-top:4px solid ${b.color}">
+    const b = panelData.branches[bid]; const r = calcBranch(bid);
+    cards += `<div style="background:#fff;border-radius:14px;padding:1.2rem;box-shadow:0 2px 10px rgba(0,0,0,.06);border-top:4px solid ${b.color}">
       <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem"><span style="font-size:1.5rem">${b.emoji}</span><strong style="color:#0d1b3e">${b.name}</strong></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;font-size:.82rem">
         <div><div style="color:#888">Toplam Gün</div><div style="font-weight:700">${r.totalDays} gün</div></div>
@@ -491,188 +255,128 @@ function renderDashboard(){
       </div>
     </div>`;
   });
-  cards+='</div>';
-  document.getElementById('dashCards').innerHTML=cards;
+  cards += '</div>';
+  document.getElementById('dashCards').innerHTML = cards;
 }
 
-// ── YOKLAMA ──
 function renderYoklama(){
-  const branches=getUserBranches();
-  const daysInMonth=new Date(currentYear,currentMonth,0).getDate();
-  let html='';
+  const branches = Object.keys(panelData.branches||{});
+  const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
+  let html = '';
   branches.forEach(bid=>{
-    const b=panelData.branches[bid];
-    html+=`<div class="branch-section"><div class="branch-header"><span style="font-size:1.8rem">${b.emoji}</span><div><div style="font-size:1.1rem;font-weight:800;color:#0d1b3e">${b.name}</div></div></div>`;
+    const b = panelData.branches[bid];
+    html += `<div class="branch-section"><div class="branch-header"><span style="font-size:1.8rem">${b.emoji}</span><div style="font-size:1.1rem;font-weight:800;color:#0d1b3e">${b.name}</div></div>`;
     b.coaches.forEach(c=>{
-      const att=b.attendance[c.id]||[];
-      html+=`<div style="margin-bottom:1.2rem"><div style="font-weight:600;font-size:.9rem;margin-bottom:.5rem;color:#0d1b3e">${c.name} <span style="color:#888;font-weight:400">(${att.length} gün)</span></div><div class="attendance-grid">`;
+      const att = b.attendance[c.id] || [];
+      html += `<div style="margin-bottom:1.2rem"><div style="font-weight:600;font-size:.9rem;margin-bottom:.5rem;color:#0d1b3e">${c.name} <span style="color:#888;font-weight:400">(${att.length} gün)</span></div><div class="attendance-grid">`;
       for(let d=1;d<=daysInMonth;d++){
-        html+=`<button class="day-btn ${att.includes(d)?'checked':''}" onclick="toggleDay('${bid}','${c.id}',${d},this)">${d}</button>`;
+        html += `<button class="day-btn ${att.includes(d)?'checked':''}" onclick="toggleDay('${bid}','${c.id}',${d},this)">${d}</button>`;
       }
-      html+=`</div></div>`;
+      html += `</div></div>`;
     });
-    html+=`</div>`;
+    html += `</div>`;
   });
-  document.getElementById('yoklamaContent').innerHTML=html;
+  document.getElementById('yoklamaContent').innerHTML = html;
 }
 
-async function toggleDay(bid,cid,day,btn){
-  if(!panelData.branches[bid].attendance[cid])panelData.branches[bid].attendance[cid]=[];
-  const att=panelData.branches[bid].attendance[cid];
-  const idx=att.indexOf(day);
-  if(idx>-1){att.splice(idx,1);btn.classList.remove('checked');}
-  else{att.push(day);att.sort((a,b)=>a-b);btn.classList.add('checked');}
+async function toggleDay(bid, cid, day, btn){
+  if(!panelData.branches[bid].attendance[cid]) panelData.branches[bid].attendance[cid] = [];
+  const att = panelData.branches[bid].attendance[cid];
+  const idx = att.indexOf(day);
+  if(idx > -1){ att.splice(idx, 1); btn.classList.remove('checked'); }
+  else{ att.push(day); att.sort((a,b)=>a-b); btn.classList.add('checked'); }
   await saveData();
-  renderDashboard();renderRapor();
-  if(userProfile.role==='admin')renderAntrenorler();
+  renderDashboard(); renderRapor(); renderAntrenorler();
 }
 
 async function markAll(val){
-  const daysInMonth=new Date(currentYear,currentMonth,0).getDate();
-  getUserBranches().forEach(bid=>{
+  const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
+  Object.keys(panelData.branches||{}).forEach(bid=>{
     panelData.branches[bid].coaches.forEach(c=>{
-      panelData.branches[bid].attendance[c.id]=val?Array.from({length:daysInMonth},(_,i)=>i+1):[];
+      panelData.branches[bid].attendance[c.id] = val ? Array.from({length:daysInMonth},(_,i)=>i+1) : [];
     });
   });
-  await saveData();renderAll();
+  await saveData(); renderAll();
 }
 
 async function resetMonth(){
-  if(!confirm(`${MONTHS[currentMonth]} ${currentYear} yoklamasını sıfırlamak istediğinizden emin misiniz?`))return;
-  getUserBranches().forEach(bid=>{
-    panelData.branches[bid].coaches.forEach(c=>{panelData.branches[bid].attendance[c.id]=[];});
+  if(!confirm(`${MONTHS[currentMonth]} ${currentYear} yoklamasını sıfırlamak istediğinizden emin misiniz?`)) return;
+  Object.keys(panelData.branches||{}).forEach(bid=>{
+    panelData.branches[bid].coaches.forEach(c=>{ panelData.branches[bid].attendance[c.id] = []; });
   });
-  await saveData();renderAll();toast('🗑 Yoklama sıfırlandı');
+  await saveData(); renderAll(); toast('🗑 Yoklama sıfırlandı');
 }
 
-// ── RAPOR ──
 function renderRapor(){
-  const branches=getUserBranches();
-  let html=`<table><thead><tr><th>Branş</th><th>Antrenör</th><th>Gün</th><th>Günlük Ücret</th><th>Toplam</th></tr></thead><tbody>`;
-  let grand=0;
+  const branches = Object.keys(panelData.branches||{});
+  let html = `<table><thead><tr><th>Branş</th><th>Antrenör</th><th>Gün</th><th>Günlük Ücret</th><th>Toplam</th></tr></thead><tbody>`;
+  let grand = 0;
   branches.forEach(bid=>{
-    const b=panelData.branches[bid];
-    const totalW=b.coaches.reduce((s,c)=>s+(c.weight||1),0)||1;
+    const b = panelData.branches[bid];
+    const totalW = b.coaches.reduce((s,c)=>s+(c.weight||1), 0) || 1;
     b.coaches.forEach(c=>{
-      const days=(b.attendance[c.id]||[]).length;
-      const pay=Math.round(days*(b.dailyRate||750)*((c.weight||1)/totalW));
-      grand+=pay;
-      html+=`<tr>
+      const days = (b.attendance[c.id]||[]).length;
+      const pay = Math.round(days*(b.dailyRate||750)*((c.weight||1)/totalW));
+      grand += pay;
+      html += `<tr>
         <td><span style="background:${b.color}20;color:${b.color};padding:.2rem .6rem;border-radius:6px;font-size:.78rem;font-weight:700">${b.emoji} ${b.name}</span></td>
         <td>${c.name}</td><td>${days}</td><td>₺${b.dailyRate||750}</td>
         <td style="font-weight:700">₺${pay.toLocaleString('tr')}</td>
       </tr>`;
     });
   });
-  html+=`</tbody><tfoot><tr style="background:#f8f9fa"><td colspan="4" style="font-weight:800;padding:1rem">TOPLAM</td><td style="font-weight:800;font-size:1.1rem;padding:1rem">₺${grand.toLocaleString('tr')}</td></tr></tfoot></table>`;
-  document.getElementById('raporContent').innerHTML=html;
+  html += `</tbody><tfoot><tr style="background:#f8f9fa"><td colspan="4" style="font-weight:800;padding:1rem">TOPLAM</td><td style="font-weight:800;font-size:1.1rem;padding:1rem">₺${grand.toLocaleString('tr')}</td></tr></tfoot></table>`;
+  document.getElementById('raporContent').innerHTML = html;
 }
 
-// ── ANTRENÖR ÖZETİ ──
 function renderAntrenorler(){
-  const map={};
+  const map = {};
   Object.keys(panelData.branches||{}).forEach(bid=>{
-    const b=panelData.branches[bid];
-    const totalW=b.coaches.reduce((s,c)=>s+(c.weight||1),0)||1;
+    const b = panelData.branches[bid];
+    const totalW = b.coaches.reduce((s,c)=>s+(c.weight||1), 0) || 1;
     b.coaches.forEach(c=>{
-      if(!map[c.name])map[c.name]={name:c.name,branches:[],totalDays:0,totalPay:0};
-      const days=(b.attendance[c.id]||[]).length;
-      const pay=Math.round(days*(b.dailyRate||750)*((c.weight||1)/totalW));
-      map[c.name].totalDays+=days;map[c.name].totalPay+=pay;
-      map[c.name].branches.push({name:b.name,emoji:b.emoji,color:b.color,days});
+      if(!map[c.name]) map[c.name] = {name:c.name, branches:[], totalDays:0, totalPay:0};
+      const days = (b.attendance[c.id]||[]).length;
+      const pay = Math.round(days*(b.dailyRate||750)*((c.weight||1)/totalW));
+      map[c.name].totalDays += days; map[c.name].totalPay += pay;
+      map[c.name].branches.push({name:b.name, emoji:b.emoji, color:b.color, days});
     });
   });
-  let html=`<table><thead><tr><th>Antrenör</th><th>Branşlar</th><th>Toplam Gün</th><th>Toplam Ödeme</th></tr></thead><tbody>`;
+  let html = `<table><thead><tr><th>Antrenör</th><th>Branşlar</th><th>Toplam Gün</th><th>Toplam Ödeme</th></tr></thead><tbody>`;
   Object.values(map).forEach(coach=>{
-    html+=`<tr>
+    html += `<tr>
       <td style="font-weight:700">${coach.name}</td>
       <td>${coach.branches.map(bb=>`<span style="background:${bb.color}20;color:${bb.color};padding:.15rem .5rem;border-radius:5px;font-size:.75rem;margin:.1rem;display:inline-block">${bb.emoji} ${bb.name} (${bb.days}g)</span>`).join('')}</td>
       <td>${coach.totalDays}</td>
       <td style="font-weight:700">₺${coach.totalPay.toLocaleString('tr')}</td>
     </tr>`;
   });
-  html+=`</tbody></table>`;
-  document.getElementById('antrenorContent').innerHTML=html;
+  html += `</tbody></table>`;
+  document.getElementById('antrenorContent').innerHTML = html;
 }
 
-// ── KULLANICILAR ──
-async function renderKullanicilar(){
-  const snap=await db.collection('users').get();
-  let html='<div class="user-list">';
-  snap.forEach(doc=>{
-    const u=doc.data();
-    const roleLabel=u.role==='admin'?'Admin':'Antrenör';
-    const roleClass=u.role==='admin'?'role-admin':'role-coach';
-    const branchLabels=(u.branches||[]).filter(b=>b!=='*').map(bid=>{
-      const br=DEFAULT_BRANCHES.find(x=>x.id===bid);
-      return br?`<span style="background:#f0f0f0;padding:.1rem .4rem;border-radius:4px;font-size:.72rem;margin:.1rem;display:inline-block">${br.emoji} ${br.name}</span>`:'';
-    }).join('');
-    html+=`<div class="user-card">
-      <div class="user-avatar">${(u.name||'?')[0]}</div>
-      <div class="user-info">
-        <div class="user-name">${u.name}</div>
-        <div class="user-uname">@${u.username||''}</div>
-        <div style="margin-top:.3rem">${branchLabels}</div>
-      </div>
-      <span class="role-badge ${roleClass}">${roleLabel}</span>
-      <button class="btn btn-outline" onclick="openUserModal('${doc.id}')">✏️ Düzenle</button>
-    </div>`;
-  });
-  html+='</div>';
-  document.getElementById('kullanicilarContent').innerHTML=html;
-}
-
-async function openUserModal(uid){
-  editingUid=uid;
-  const snap=await db.collection('users').doc(uid).get();
-  editUserData=snap.data();
-  document.getElementById('mName').value=editUserData.name||'';
-  document.getElementById('mRole').value=editUserData.role||'coach';
-  toggleBranchField();
-  document.getElementById('userModal').classList.add('open');
-}
-function toggleBranchField(){
-  const role=document.getElementById('mRole').value;
-  document.getElementById('mBranchField').style.display=role==='coach'?'block':'none';
-  const selected=editUserData?.branches||[];
-  document.getElementById('mBranchCbs').innerHTML=DEFAULT_BRANCHES.map(b=>`
-    <label class="branch-cb"><input type="checkbox" value="${b.id}" ${selected.includes(b.id)?'checked':''}> ${b.emoji} ${b.name}</label>
-  `).join('');
-}
-function closeModal(){ document.getElementById('userModal').classList.remove('open');editingUid=null;editUserData=null; }
-async function saveUser(){
-  const name=document.getElementById('mName').value.trim();
-  const role=document.getElementById('mRole').value;
-  const branches=role==='admin'?['*']:[...document.querySelectorAll('#mBranchCbs input:checked')].map(cb=>cb.value);
-  await db.collection('users').doc(editingUid).update({name,role,branches});
-  closeModal();toast('✅ Kullanıcı güncellendi');renderKullanicilar();
-}
-
-// ── TABS ──
-function showTab(btn,name){
+function showTab(btn, name){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('tab-'+name).classList.add('active');
-  if(name==='kullanicilar')renderKullanicilar();
 }
 
-// ── CSV ──
 function exportCSV(){
-  const branches=getUserBranches();
-  let csv='Branş,Antrenör,Gün,Günlük Ücret,Toplam\n';
+  const branches = Object.keys(panelData.branches||{});
+  let csv = 'Branş,Antrenör,Gün,Günlük Ücret,Toplam\n';
   branches.forEach(bid=>{
-    const b=panelData.branches[bid];
-    const totalW=b.coaches.reduce((s,c)=>s+(c.weight||1),0)||1;
+    const b = panelData.branches[bid];
+    const totalW = b.coaches.reduce((s,c)=>s+(c.weight||1), 0) || 1;
     b.coaches.forEach(c=>{
-      const days=(b.attendance[c.id]||[]).length;
-      const pay=Math.round(days*(b.dailyRate||750)*((c.weight||1)/totalW));
-      csv+=`${b.name},${c.name},${days},${b.dailyRate||750},${pay}\n`;
+      const days = (b.attendance[c.id]||[]).length;
+      const pay = Math.round(days*(b.dailyRate||750)*((c.weight||1)/totalW));
+      csv += `${b.name},${c.name},${days},${b.dailyRate||750},${pay}\n`;
     });
   });
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
-  a.download=`DPUSK_Rapor_${currentYear}_${currentMonth}.csv`;a.click();
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
+  a.download = `DPUSK_Rapor_${currentYear}_${currentMonth}.csv`; a.click();
 }
 </script>
 </body>
